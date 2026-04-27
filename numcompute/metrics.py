@@ -1,10 +1,21 @@
 import numpy as np
 
 
-def accuracy(y_true, y_pred):
+def validate_inputs(y_true, y_pred):
     y_true = np.asarray(y_true)
     y_pred = np.asarray(y_pred)
 
+    if y_true.shape[0] != y_pred.shape[0]:
+        raise ValueError("y_true and y_pred must have the same length.")
+
+    if y_true.shape[0] == 0:
+        raise ValueError("Input arrays cannot be empty.")
+
+    return y_true, y_pred
+
+
+def accuracy(y_true, y_pred):
+    y_true, y_pred = validate_inputs(y_true, y_pred)
     return np.mean(y_true == y_pred)
 
 
