@@ -4,13 +4,6 @@ import numpy as np
 class Imputer:
     """
     Imputer for handling missing values in mixed-type datasets.
-
-    Parameters
-    ----------
-    strategy : str
-        "mean", "most_frequent", or "constant"
-    fill_value : optional
-        Used when strategy="constant"
     """
 
     def __init__(self, strategy="mean", fill_value=None):
@@ -19,23 +12,20 @@ class Imputer:
         self.statistics_ = None
 
     def _is_numeric_column(self, col):
-        """Robust numeric column detection"""
         valid_count = 0
         numeric_count = 0
 
         for val in col:
-            # Skip missing values
             if val in ("", b"", None):
                 continue
 
-            # Handle NaN properly
             if isinstance(val, float) and np.isnan(val):
                 continue
 
             valid_count += 1
 
             try:
-                float(str(val))  # 🔥 IMPORTANT FIX
+                float(str(val))
                 numeric_count += 1
             except (ValueError, TypeError):
                 pass
@@ -43,13 +33,6 @@ class Imputer:
         return numeric_count >= valid_count / 2 if valid_count > 0 else False
 
     def fit(self, X):
-        """
-        Compute statistics for imputation.
-
-        Parameters
-        ----------
-        X : np.ndarray of shape (n_samples, n_features)
-        """
         X = np.array(X, dtype=object)
         n_features = X.shape[1]
 
@@ -59,7 +42,6 @@ class Imputer:
             col = X[:, j]
 
             if self._is_numeric_column(col):
-                # Convert to float and ignore NaNs
                 col_float = []
                 for val in col:
                     try:
@@ -75,7 +57,6 @@ class Imputer:
                     stat = np.nanmean(col_float)
 
             else:
-                # categorical
                 col_clean = [val for val in col if val not in (np.nan, "", b"", None)]
 
                 if len(col_clean) == 0:
@@ -89,17 +70,9 @@ class Imputer:
         return self
 
     def transform(self, X):
-        """
-        Apply imputation.
+        if self.statistics_ is None:
+            raise ValueError("Imputer must be fitted before calling transform().")
 
-        Parameters
-        ----------
-        X : np.ndarray
-
-        Returns
-        -------
-        np.ndarray
-        """
         X = np.array(X, dtype=object)
         X_out = X.copy()
 
@@ -128,7 +101,6 @@ class StandardScaler:
         self.numeric_mask_ = None
 
     def _is_numeric(self, col):
-        """Robust numeric column detection"""
         valid_count = 0
         numeric_count = 0
 
@@ -142,7 +114,7 @@ class StandardScaler:
             valid_count += 1
 
             try:
-                float(str(val))  # 🔥 same fix
+                float(str(val))
                 numeric_count += 1
             except (ValueError, TypeError):
                 pass
@@ -167,7 +139,7 @@ class StandardScaler:
                 std = np.nanstd(col_float)
 
                 if std == 0:
-                    std = 1.0  # avoid division by zero
+                    std = 1.0
 
                 numeric_mask.append(True)
                 means.append(mean)
@@ -184,6 +156,9 @@ class StandardScaler:
         return self
 
     def transform(self, X):
+        if self.mean_ is None or self.std_ is None or self.numeric_mask_ is None:
+            raise ValueError("StandardScaler must be fitted before calling transform().")
+
         X = np.array(X, dtype=object)
         X_out = X.copy()
 
@@ -212,12 +187,10 @@ class OneHotEncoder:
         self.categorical_mask_ = None
 
     def _is_numeric(self, col):
-        """Robust numeric detection (safe, no crashes)"""
         valid_count = 0
         numeric_count = 0
 
         for val in col:
-            # skip missing
             if val in ("", b"", None):
                 continue
 
@@ -227,10 +200,10 @@ class OneHotEncoder:
             valid_count += 1
 
             try:
-                _ = float(val)  # 🔥 no str() needed
+                _ = float(val)
                 numeric_count += 1
             except (ValueError, TypeError):
-                continue  # 🔥 explicitly continue
+                continue
 
         return numeric_count >= valid_count / 2 if valid_count > 0 else False
 
@@ -247,7 +220,6 @@ class OneHotEncoder:
             if not self._is_numeric(col):
                 self.categorical_mask_.append(True)
 
-                # remove missing values
                 col_clean = [v for v in col if v not in ("", b"", None)]
 
                 categories = np.unique(col_clean)
@@ -259,6 +231,9 @@ class OneHotEncoder:
         return self
 
     def transform(self, X):
+        if self.categories_ is None or self.categorical_mask_ is None:
+            raise ValueError("OneHotEncoder must be fitted before calling transform().")
+
         X = np.array(X, dtype=object)
         output_cols = []
 
@@ -268,7 +243,6 @@ class OneHotEncoder:
             if self.categorical_mask_[j]:
                 categories = self.categories_[j]
 
-                # create one-hot columns
                 one_hot = np.zeros((X.shape[0], len(categories)))
 
                 for i, val in enumerate(col):
@@ -279,7 +253,6 @@ class OneHotEncoder:
                 output_cols.append(one_hot)
 
             else:
-                # numeric column
                 col_numeric = np.array(
                     [float(x) if x not in ("", b"", None) else np.nan for x in col],
                     dtype=float,
