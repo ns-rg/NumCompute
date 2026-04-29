@@ -13,13 +13,13 @@ def f_vector(x):
 def test_gradient_scalar():
     g = gradient(f_scalar, 3.0)
     assert abs(g - 6.0) < 1e-3
-    print("Gradient scalar tests passed.")
+    print("Gradient scalar tests passed!!")
 
 
 def test_gradient_vector():
     g = gradient(lambda x: x[0] ** 2 + x[1] ** 2, np.array([3.0, 4.0]))
     assert np.allclose(g, np.array([6.0, 8.0]), atol=1e-3)
-    print("Gradient vector tests passed.")
+    print("Gradient vector tests passed!!")
 
 
 def test_jacobian():
@@ -27,7 +27,7 @@ def test_jacobian():
     j = jacobian(f_vector, x)
     expected = np.array([[4.0, 0.0], [0.0, 6.0]])
     assert np.allclose(j, expected, atol=1e-3)
-    print("Gradient and Jacobian tests passed.")
+    print("Gradient and Jacobian tests passed!!")
 
 
 if __name__ == "__main__":

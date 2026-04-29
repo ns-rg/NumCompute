@@ -9,7 +9,7 @@ def test_topk():
     vals, idx = topk(arr, 2)
 
     assert list(vals) == [20, 15]
-    print("✅ test_topk passed")
+    print("test_topk passed!!")
 
 
 def test_binary_search():
@@ -21,7 +21,7 @@ def test_binary_search():
     idx, found = binary_search(arr, 25)
     assert not found and idx == 2
 
-    print("✅ test_binary_search passed")
+    print("test_binary_search passed!!")
 
 
 if __name__ == "__main__":

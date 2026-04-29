@@ -1,5 +1,5 @@
 import numpy as np
-from stats_utils import rank, percentile
+from numcompute.rank import rank, percentile
 
 
 def test_rank_average():
@@ -117,4 +117,4 @@ if __name__ == "__main__":
     test_percentile_empty_data()
     test_percentile_invalid_interpolation()
 
-    print("All tests passed successfully!")
+    print("All tests passed successfully!!")

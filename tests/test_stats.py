@@ -1,5 +1,5 @@
 import numpy as np
-from summary_stats import mean, std, min, max, histogram, quantile
+from numcompute.stats import mean, std, min, max, histogram, quantile
 
 
 def test_mean():
@@ -84,4 +84,4 @@ if __name__ == "__main__":
     test_quantile_with_nan()
     test_empty_histogram()
 
-    print("All tests passed successfully!")
+    print("All tests passed successfully!!")
