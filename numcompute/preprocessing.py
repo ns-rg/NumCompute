@@ -121,7 +121,7 @@ class StandardScaler:
 
         return numeric_count >= valid_count / 2 if valid_count > 0 else False
 
-    def fit(self, X):
+    def fit(self, X, y=None):
         X = np.array(X, dtype=object)
         n_features = X.shape[1]
 

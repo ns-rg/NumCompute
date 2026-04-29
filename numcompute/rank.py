@@ -2,19 +2,15 @@ import numpy as np
 
 
 def rank(data, method="average"):
+    
     """
-    Rank data with tie handling.
-
-    Parameters
-    ----------
+    This function Rank data with tie handling and returns np.ndarray of ranks.
+    
+    Parameters -
     data : array-like
-    method : str
-        'average', 'dense', or 'ordinal'
-
-    Returns
-    -------
-    np.ndarray of ranks
+    method: str, 'average', 'dense', or 'ordinal'
     """
+    
 
     data = np.asarray(data)
 
@@ -53,19 +49,13 @@ def rank(data, method="average"):
 
 
 def percentile(data, q, interpolation="linear"):
+    
     """
-    Compute percentile.
-
-    Parameters
-    ----------
-    data : array-like
-    q : float (0–100)
-    interpolation : str
-        'linear', 'lower', 'higher', 'midpoint'
-
-    Returns
-    -------
-    float
+    This function computes percentile and returns float datatype.
+    Parameters - 
+    data: array-like
+    q: float (0-100)
+    interpolation: str, ('linear', 'lower', 'higher', 'midpoint')
     """
 
     data = np.asarray(data, dtype=float)
