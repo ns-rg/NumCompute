@@ -9,7 +9,6 @@ def load_csv(
     filling_values=np.nan,
     dtype=object,
 ):
-    
     """
     This function load a CSV file into a NumPy array and returns 2D numpy array containing data.
     The function raises ValueError if file is not readable or data is invalid.
@@ -20,7 +19,7 @@ def load_csv(
     missing_values : str or sequence, optional (Representation of missing values default is empty string)
     filling_values : scalar, optional (filling missing entries default is np.nan)
     dtype : data-type, optional (To get desiered data type of result)
-    
+
     """
 
     try:
@@ -43,8 +42,14 @@ def load_csv(
 
         # Normalizing missing values
         def _normalize_missing(x):
-            if x in ("", b"", None):
+            # convert bytes → string
+            if isinstance(x, bytes):
+                x = x.decode("utf-8")
+
+            # handle missing values
+            if x in ("", None):
                 return np.nan
+
             return x
 
         vectorized_fn = np.vectorize(_normalize_missing, otypes=[object])

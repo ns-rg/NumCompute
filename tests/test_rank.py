@@ -8,6 +8,7 @@ def test_rank_average():
     expected = np.array([1.0, 2.5, 2.5, 4.0])
 
     assert np.array_equal(result, expected)
+    print("test_rank_average passed!!")
 
 
 def test_rank_dense():
@@ -16,6 +17,7 @@ def test_rank_dense():
     expected = np.array([1.0, 2.0, 2.0, 3.0])
 
     assert np.array_equal(result, expected)
+    print("test_rank_dense passed!!")
 
 
 def test_rank_ordinal():
@@ -24,6 +26,7 @@ def test_rank_ordinal():
     expected = np.array([1.0, 2.0, 3.0, 4.0])
 
     assert np.array_equal(result, expected)
+    print("test_rank_ordinal passed!!")
 
 
 def test_rank_unsorted_data():
@@ -32,6 +35,7 @@ def test_rank_unsorted_data():
     expected = np.array([3.0, 1.0, 2.0])
 
     assert np.array_equal(result, expected)
+    print("test_rank_unsorted_data passed!!")
 
 
 def test_rank_invalid_method():
@@ -40,6 +44,7 @@ def test_rank_invalid_method():
         assert False
     except ValueError:
         assert True
+    print("test_rank_invalid_method passed!!")
 
 
 def test_percentile_linear():
@@ -47,6 +52,7 @@ def test_percentile_linear():
     result = percentile(data, 50, interpolation="linear")
 
     assert result == 25.0
+    print("test_percentile_linear passed!!")
 
 
 def test_percentile_lower():
@@ -54,6 +60,7 @@ def test_percentile_lower():
     result = percentile(data, 50, interpolation="lower")
 
     assert result == 20
+    print("test_percentile_lower passed!!")
 
 
 def test_percentile_higher():
@@ -61,6 +68,7 @@ def test_percentile_higher():
     result = percentile(data, 50, interpolation="higher")
 
     assert result == 30
+    print("test_percentile_higher passed!!")
 
 
 def test_percentile_midpoint():
@@ -68,6 +76,7 @@ def test_percentile_midpoint():
     result = percentile(data, 50, interpolation="midpoint")
 
     assert result == 25.0
+    print("test_percentile_midpoint passed!!")
 
 
 def test_percentile_with_nan():
@@ -75,6 +84,7 @@ def test_percentile_with_nan():
     result = percentile(data, 50)
 
     assert result == 20.0
+    print("test_percentile_with_nan passed!!")
 
 
 def test_percentile_invalid_q():
@@ -83,6 +93,7 @@ def test_percentile_invalid_q():
         assert False
     except ValueError:
         assert True
+    print("test_percentile_invalid_q passed!!")
 
 
 def test_percentile_empty_data():
@@ -91,6 +102,7 @@ def test_percentile_empty_data():
         assert False
     except ValueError:
         assert True
+    print("test_percentile_empty_data passed!!")
 
 
 def test_percentile_invalid_interpolation():
@@ -99,6 +111,7 @@ def test_percentile_invalid_interpolation():
         assert False
     except ValueError:
         assert True
+    print("test_percentile_invalid_interpolation passed!!")
 
 
 if __name__ == "__main__":
@@ -116,5 +129,3 @@ if __name__ == "__main__":
     test_percentile_invalid_q()
     test_percentile_empty_data()
     test_percentile_invalid_interpolation()
-
-    print("All tests passed successfully!!")

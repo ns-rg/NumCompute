@@ -1,16 +1,18 @@
-import numpy as np
 from numcompute.pipeline import Pipeline
-from numcompute.preprocessing import StandardScaler
+from numcompute.preprocessing import Imputer, StandardScaler
+import numpy as np
 
 
 def test_pipeline():
-    X = np.array([[1, 2], [3, 4]])
-    pipe = Pipeline([("scaler", StandardScaler())])
+    X = np.array([[1, np.nan], [2, 3], [3, 4]], dtype=object)
 
-    X_transformed = pipe.fit_transform(X)
+    pipe = Pipeline([("impute", Imputer()), ("scale", StandardScaler())])
 
-    assert X_transformed.shape == X.shape
-    print("Pipeline test passed.")
+    X_out = pipe.fit_transform(X)
+
+    assert X_out.shape == (3, 2)
+
+    print("test_pipeline passed")
 
 
 if __name__ == "__main__":

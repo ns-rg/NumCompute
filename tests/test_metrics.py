@@ -10,15 +10,17 @@ from numcompute.metrics import (
 
 
 def test_accuracy():
+    # Testing accuracy calculation.
     y_true = [1, 0, 1, 1]
     y_pred = [1, 0, 0, 1]
 
     result = accuracy(y_true, y_pred)
     assert result == 0.75
-    print("test_accuracy passed")
+    print("test_accuracy passed!!")
 
 
 def test_confusion_matrix():
+    # Testing confusion matrix calculation.
     y_true = [0, 0, 1, 1]
     y_pred = [0, 1, 1, 1]
 
@@ -26,10 +28,11 @@ def test_confusion_matrix():
     expected = np.array([[1, 1], [0, 2]])
 
     assert np.array_equal(result, expected)
-    print("test_confusion_matrix passed")
+    print("test_confusion_matrix passed!!")
 
 
 def test_precision():
+    # Testing precision calculation.
     y_true = [0, 0, 1, 1]
     y_pred = [0, 1, 1, 1]
 
@@ -37,10 +40,11 @@ def test_precision():
     expected = (1.0 + 2 / 3) / 2
 
     assert np.isclose(result, expected)
-    print("test_precision passed")
+    print("test_precision passed!!")
 
 
 def test_recall():
+    # Testing recall calculation.
     y_true = [0, 0, 1, 1]
     y_pred = [0, 1, 1, 1]
 
@@ -48,10 +52,11 @@ def test_recall():
     expected = (1 / 2 + 1.0) / 2
 
     assert np.isclose(result, expected)
-    print("test_recall passed")
+    print("test_recall passed!!")
 
 
 def test_f1_score():
+    # Testing F1 score calculation.
     y_true = [0, 0, 1, 1]
     y_pred = [0, 1, 1, 1]
 
@@ -62,35 +67,38 @@ def test_f1_score():
     expected = 2 * (p * r) / (p + r + 1e-8)
 
     assert np.isclose(result, expected)
-    print("test_f1_score passed")
+    print("test_f1_score passed!!")
 
 
 def test_mse():
+    # Testing Mean Squared Error calculation.
     y_true = [2, 4, 6]
     y_pred = [3, 5, 4]
 
     result = mse(y_true, y_pred)
 
     assert result == 2.0
-    print("test_mse passed")
+    print("test_mse passed!!")
 
 
 def test_invalid_lengths():
+    # Testing error handling for mismatched input lengths.
     try:
         accuracy([1, 2, 3], [1, 2])
         assert False
     except ValueError:
         assert True
-    print("test_invalid_lengths passed")
+    print("test_invalid_lengths passed!!")
 
 
 def test_empty_input():
+    # Testing error handling for empty input.
     try:
         accuracy([], [])
         assert False
     except ValueError:
         assert True
-    print("test_empty_input passed")
+    print("test_empty_input passed!!")
 
 
 if __name__ == "__main__":

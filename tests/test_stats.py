@@ -5,31 +5,32 @@ from numcompute.stats import mean, std, min, max, histogram, quantile
 def test_mean():
     X = [1, 2, np.nan, 4]
     assert mean(X) == np.nanmean(X)
+    print("test_mean passed!!")
 
 
 def test_std():
     X = [1, 2, np.nan, 4]
     assert np.isclose(std(X), np.nanstd(X))
+    print("test_std passed!!")
 
 
 def test_min():
     X = [1, 2, np.nan, 4]
     assert min(X) == 1
+    print("test_min passed!!")
 
 
 def test_max():
     X = [1, 2, np.nan, 4]
     assert max(X) == 4
+    print("test_max passed!!")
 
 
 def test_mean_axis():
-    X = np.array([
-        [1, 2],
-        [3, np.nan],
-        [5, 6]
-    ])
+    X = np.array([[1, 2], [3, np.nan], [5, 6]])
 
     assert np.array_equal(mean(X, axis=0), np.nanmean(X, axis=0))
+    print("test_mean_axis passed!!")
 
 
 def test_histogram():
@@ -40,6 +41,7 @@ def test_histogram():
 
     assert np.array_equal(counts, expected_counts)
     assert np.array_equal(edges, expected_edges)
+    print("test_histogram passed!!")
 
 
 def test_quantile_scalar():
@@ -47,6 +49,7 @@ def test_quantile_scalar():
     result = quantile(X, 0.5)
 
     assert result == 25.0
+    print("test_quantile_scalar passed!!")
 
 
 def test_quantile_multiple():
@@ -56,6 +59,7 @@ def test_quantile_multiple():
     expected = np.array([17.5, 25.0, 32.5])
 
     assert np.allclose(result, expected)
+    print("test_quantile_multiple passed!!")
 
 
 def test_quantile_with_nan():
@@ -63,6 +67,7 @@ def test_quantile_with_nan():
     result = quantile(X, 0.5)
 
     assert result == 20.0
+    print("test_quantile_with_nan passed!!")
 
 
 def test_empty_histogram():
@@ -70,6 +75,7 @@ def test_empty_histogram():
     counts, edges = histogram(X)
 
     assert counts.sum() == 0
+    print("test_empty_histogram passed!!")
 
 
 if __name__ == "__main__":
@@ -83,5 +89,3 @@ if __name__ == "__main__":
     test_quantile_multiple()
     test_quantile_with_nan()
     test_empty_histogram()
-
-    print("All tests passed successfully!!")

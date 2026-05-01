@@ -20,15 +20,11 @@ def test_load_csv_basic():
 def test_missing_values():
     
     # Testing whether missing values handled or not
-    """
-    Test handling of missing values.
-    """
     data = load_csv("test.csv", skip_header=1)
 
     value = data[1][1]
 
     # Converting to float safely before checking NaN
-    
     try:
         value = float(value)
     except (ValueError, TypeError):
