@@ -10,16 +10,21 @@ def load_csv(
     dtype=object,
 ):
     """
-    This function load a CSV file into a NumPy array and returns 2D numpy array containing data.
-    The function raises ValueError if file is not readable or data is invalid.
-    Parameters -
-    path : str (Path of CSV file)
-    delimiter : str, optional but default is ','
-    skip_header : int, optional (Number of rows to skip at beginning)
-    missing_values : str or sequence, optional (Representation of missing values default is empty string)
-    filling_values : scalar, optional (filling missing entries default is np.nan)
-    dtype : data-type, optional (To get desiered data type of result)
+    Load CSV file into a 2D numpy array with robust handling of missing values and flexible data types.
 
+    Parameters -
+    -path : str (Path of CSV file)
+    -delimiter : str, optional but default is ','
+    -skip_header : int, optional (Number of rows to skip at beginning)
+    -missing_values : str or sequence, optional (Representation of missing values default is empty string)
+    -filling_values : scalar, optional (filling missing entries default is np.nan)
+    -dtype : data-type, optional (To get desiered data type of result)
+
+    Returns:
+    - 2D numpy array containing data from CSV file
+
+    Raises:
+    - ValueError: If file cannot be loaded or data is empty
     """
 
     try:

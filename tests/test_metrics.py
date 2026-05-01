@@ -10,7 +10,10 @@ from numcompute.metrics import (
 
 
 def test_accuracy():
-    # Testing accuracy calculation.
+    """
+    Testing accuracy calculation.
+    We will use a simple binary classification example to verify that the accuracy is calculated correctly.
+    """
     y_true = [1, 0, 1, 1]
     y_pred = [1, 0, 0, 1]
 
@@ -20,7 +23,10 @@ def test_accuracy():
 
 
 def test_confusion_matrix():
-    # Testing confusion matrix calculation.
+    """
+    Testing confusion matrix calculation.
+    We will use a simple binary classification example to verify that the confusion matrix is calculated correctly.
+    """
     y_true = [0, 0, 1, 1]
     y_pred = [0, 1, 1, 1]
 
@@ -32,7 +38,10 @@ def test_confusion_matrix():
 
 
 def test_precision():
-    # Testing precision calculation.
+    """
+    Testing precision calculation.
+    We will use a simple binary classification example to verify that the precision is calculated correctly.
+    """
     y_true = [0, 0, 1, 1]
     y_pred = [0, 1, 1, 1]
 
@@ -44,7 +53,10 @@ def test_precision():
 
 
 def test_recall():
-    # Testing recall calculation.
+    """
+    Testing recall calculation.
+    We will use a simple binary classification example to verify that the recall is calculated correctly.
+    """
     y_true = [0, 0, 1, 1]
     y_pred = [0, 1, 1, 1]
 
@@ -56,7 +68,10 @@ def test_recall():
 
 
 def test_f1_score():
-    # Testing F1 score calculation.
+    """
+    Testing F1 score calculation.
+    We will use a simple binary classification example to verify that the F1 score is calculated correctly.
+    """
     y_true = [0, 0, 1, 1]
     y_pred = [0, 1, 1, 1]
 
@@ -71,7 +86,10 @@ def test_f1_score():
 
 
 def test_mse():
-    # Testing Mean Squared Error calculation.
+    """
+    Testing Mean Squared Error calculation.
+    We will use a simple example to verify that the MSE is calculated correctly.
+    """
     y_true = [2, 4, 6]
     y_pred = [3, 5, 4]
 
@@ -82,7 +100,10 @@ def test_mse():
 
 
 def test_invalid_lengths():
-    # Testing error handling for mismatched input lengths.
+    """
+    Testing error handling for mismatched input lengths.
+    We will provide inputs of different lengths and verify that a ValueError is raised.
+    """
     try:
         accuracy([1, 2, 3], [1, 2])
         assert False
@@ -92,7 +113,10 @@ def test_invalid_lengths():
 
 
 def test_empty_input():
-    # Testing error handling for empty input.
+    """
+    Testing error handling for empty input.
+    We will provide empty inputs and verify that a ValueError is raised.
+    """
     try:
         accuracy([], [])
         assert False

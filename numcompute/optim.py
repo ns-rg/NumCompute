@@ -3,14 +3,19 @@ import numpy as np
 
 def grad(f, x, h=1e-5, method="central"):
     """
-    Compute gradient using finite differences.
+    Compute gradient for scalar-valued function.
 
-    Parameters
-    ----------
-    f : function
-    x : array-like
-    h : float
-    method : 'central' or 'forward'
+    Parameters:
+    -f (callable): The function for which to compute the gradient.
+    -x (array-like): The point at which to compute the gradient.
+    -h (float): The step size for finite difference approximation.
+    -method (str): The finite difference method to use ("central" or "forward").
+
+    Returns:
+    -numpy.ndarray: The computed gradient.
+
+    Raises:
+    -ValueError: If an invalid method is specified.
     """
 
     x = np.asarray(x, dtype=float)
@@ -46,6 +51,14 @@ def grad(f, x, h=1e-5, method="central"):
 def jacobian(f, x, h=1e-5):
     """
     Compute Jacobian for vector-valued function.
+
+    Parameters:
+    -f (callable): The function for which to compute the Jacobian.
+    -x (array-like): The point at which to compute the Jacobian.
+    -h (float): The step size for finite difference approximation.
+
+    Returns:
+    -numpy.ndarray: The computed Jacobian.
     """
 
     x = np.asarray(x, dtype=float)

@@ -1,16 +1,16 @@
 import numpy as np
 
-
 def rank(data, method="average"):
-    
     """
-    This function Rank data with tie handling and returns np.ndarray of ranks.
-    
-    Parameters -
-    data : array-like
-    method: str, 'average', 'dense', or 'ordinal'
+    Compute ranks for the given data.
+    Parameters:
+    - data: array-like, the input data to rank
+    - method: str, the method to handle ties ('ordinal', 'dense', 'average')
+    Returns:
+    - ranks: numpy array of ranks corresponding to the input data
+    Raises:
+    - ValueError: If an invalid method is specified or if data is empty.
     """
-    
 
     data = np.asarray(data)
 
@@ -49,13 +49,16 @@ def rank(data, method="average"):
 
 
 def percentile(data, q, interpolation="linear"):
-    
     """
-    This function computes percentile and returns float datatype.
-    Parameters - 
-    data: array-like
-    q: float (0-100)
-    interpolation: str, ('linear', 'lower', 'higher', 'midpoint')
+    Compute the q-th percentile of the data with specified interpolation method.
+    Parameters:
+    - data: array-like, the input data to compute the percentile from
+    - q: float, the percentile to compute (between 0 and 100)
+    - interpolation: str, the method to handle non-integer rank ('lower', 'higher', 'midpoint', 'linear')
+    Returns:
+    - percentile_value: the computed percentile value
+    Raises:
+    - ValueError: If an invalid interpolation method is specified, if q is out of range, or if data is empty.
     """
 
     data = np.asarray(data, dtype=float)

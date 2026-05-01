@@ -1,30 +1,28 @@
 import numpy as np
 from numcompute.io import load_csv
 
-
 def test_load_csv_basic():
-    
-    # Testing basic CSV loading functionality.
+    """
+    Test the basic functionality of the load_csv function.
+    We will create a simple CSV file with known content and verify that it is loaded correctly.
+    """
     
     data = load_csv("test.csv", skip_header=1)
-
-    #Checking type
     assert isinstance(data, np.ndarray), "Output is not a NumPy array"
-
-    # Checking shape (3x3 - 3 rows, 3 colums expected)
     assert data.shape == (3, 3), f"Unexpected shape: {data.shape}"
 
     print("test_load_csv_basic passed!!")
 
 
 def test_missing_values():
+    """
+    Test the load_csv function's ability to handle missing values.
+    We will create a CSV file with some missing values and verify that they are loaded as NaN.
+    """
     
-    # Testing whether missing values handled or not
     data = load_csv("test.csv", skip_header=1)
 
     value = data[1][1]
-
-    # Converting to float safely before checking NaN
     try:
         value = float(value)
     except (ValueError, TypeError):

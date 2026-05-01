@@ -7,6 +7,9 @@ from numcompute.preprocessing import OneHotEncoder
 
 
 def test_imputer():
+    """
+    Test the Imputer class with a simple example.
+    We will create a small dataset with missing values, apply the imputer, and verify that the missing values are filled in."""
     X = np.array(
         [
             ["Alice", 25, 50000],
@@ -26,6 +29,10 @@ def test_imputer():
 
 
 def test_standard_scaler():
+    """
+    Test the StandardScaler class with a simple example.
+    We will create a small dataset with numeric and categorical values, apply the scaler, and verify that the numeric values are scaled while the categorical values remain unchanged.
+    """
     X = np.array(
         [
             ["A", 10, 100],
@@ -38,17 +45,19 @@ def test_standard_scaler():
     scaler = StandardScaler()
     X_out = scaler.fit_transform(X)
 
-    # numeric columns should be scaled
     assert abs(float(X_out[0][1])) < 2
     assert abs(float(X_out[1][1])) < 2
 
-    # categorical unchanged
     assert X_out[0][0] == "A"
 
     print("test_standard_scaler passed!!")
 
 
 def test_one_hot_encoder():
+    """
+    Test the OneHotEncoder class with a simple example.
+    We will create a small dataset with categorical and numeric values, apply the encoder, and verify that the categorical values are one-hot encoded while the numeric values remain unchanged.
+    """
     X = np.array(
         [
             ["Red", 10],
@@ -61,10 +70,8 @@ def test_one_hot_encoder():
     encoder = OneHotEncoder()
     X_out = encoder.fit_transform(X)
 
-    # Expect shape: 3 rows, 2 (categories) + 1 numeric = 3 cols
     assert X_out.shape == (3, 3)
 
-    # Check encoding
     assert (X_out[0][:2] == [1, 0]).all() or (X_out[0][:2] == [0, 1]).all()
 
     print("test_one_hot_encoder passed!!")

@@ -37,6 +37,7 @@ def test_grad_scalar():
 def test_grad_forward():
     """
     Test forward difference method.
+    f(x, y) = x^2 + y^2 → grad = [2x, 2y]
     """
 
     def f(x):

@@ -5,6 +5,14 @@ import numpy as np
 def time_function(func, *args, repeat=5):
     """
     Measure average execution time.
+
+    Parameters:
+    - func: function to time
+    - args: arguments to pass to the function
+    - repeat: number of times to repeat for averaging
+
+    Returns:
+    - Average execution time in seconds
     """
     times = []
 
@@ -20,6 +28,15 @@ def time_function(func, *args, repeat=5):
 def benchmark(name, func_vectorized, func_loop, *args):
     """
     Compare vectorized vs loop implementation.
+
+    Parameters:
+    - name: str, name of the benchmark
+    - func_vectorized: function implementing vectorized version
+    - func_loop: function implementing loop version
+    - args: arguments to pass to both functions
+
+    Returns:
+    - dict with benchmark results
     """
     t_vec = time_function(func_vectorized, *args)
     t_loop = time_function(func_loop, *args)

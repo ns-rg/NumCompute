@@ -1,12 +1,10 @@
 import numpy as np
 
-
 def topk(values, k, largest=True, return_indices=True):
-    
     """
     This function returns top-k elements from array in values or (values, indices).
-    
-    Parameters - 
+
+    Parameters -
     values: np.ndarray
     k: int
     largest: bool
@@ -34,7 +32,17 @@ def topk(values, k, largest=True, return_indices=True):
 
     return (top_values, indices) if return_indices else top_values
 
+
 def topk_loop(values, k, largest=True, return_indices=True):
+    """
+    This function returns top-k elements from array in values or (values, indices) using loop.
+    Parameters -
+    values: np.ndarray
+    k: int
+    largest: bool
+        If True - largest k, else smallest k
+    return_indices: bool
+    """
     values = list(values)
 
     if k <= 0 or k > len(values):
@@ -47,7 +55,6 @@ def topk_loop(values, k, largest=True, return_indices=True):
     result_indices = []
 
     for _ in range(k):
-
         # Find large element each iteration
         best_idx = 0
 
@@ -67,16 +74,23 @@ def topk_loop(values, k, largest=True, return_indices=True):
         result_values.append(best_value)
         result_indices.append(best_original_idx)
 
-    return (np.array(result_values), np.array(result_indices)) if return_indices else np.array(result_values)
+    return (
+        (np.array(result_values), np.array(result_indices))
+        if return_indices
+        else np.array(result_values)
+    )
+
 
 def binary_search(arr, x):
-    
     """
-    This function performs binary search on sorted array and returns (index, found).
-    
+    This function performs binary search on a sorted array to find the index of element x.
     Parameters -
-    arr: np.ndarray (sorted)
-    x: value to search in array
+    arr: np.ndarray
+        A sorted array to search through.
+    x: any
+        The element to search for in the array.
+    Returns -
+    A tuple (index, found) where index is the position of x in arr if found or the position where x can be inserted to maintain sorted order if not found, and found is a boolean indicating whether x was found in arr.
     """
 
     arr = np.asarray(arr)

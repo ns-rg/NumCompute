@@ -1,9 +1,14 @@
 import numpy as np
-
-
 class Imputer:
     """
-    Imputer for handling missing values in mixed-type datasets.
+    Impute missing values in a dataset.
+    For numeric columns, fills missing values with mean.
+    For categorical columns, fills missing values with mode.
+    Missing values are defined as empty strings, None, or np.nan.
+
+    Example usage:
+    imputer = Imputer(strategy="mean")
+    X_imputed = imputer.fit_transform(X)
     """
 
     def __init__(self, strategy="mean", fill_value=None):
@@ -12,6 +17,17 @@ class Imputer:
         self.statistics_ = None
 
     def _is_numeric_column(self, col):
+        """
+        Heuristic to determine if a column is numeric.
+        Considers a column numeric if at least 50% of its valid (non-missing and non-empty) entries can be converted to float.
+
+        Parameters:
+        - col: array-like, the column to check
+        Returns:
+        - bool: True if column is considered numeric, False otherwise
+        Raises:
+        - ValueError: If the column is empty or contains only missing values.
+        """
         valid_count = 0
         numeric_count = 0
 
@@ -33,6 +49,15 @@ class Imputer:
         return numeric_count >= valid_count / 2 if valid_count > 0 else False
 
     def fit(self, X):
+        """
+        Compute the statistics (mean for numeric, mode for categorical) for each column.
+        Parameters:
+        - X: 2D array-like, the input data to fit on
+        Returns:
+        - self: fitted Imputer instance
+         Raises:
+         - ValueError: If X is empty or not 2D.
+        """
         X = np.array(X, dtype=object)
         n_features = X.shape[1]
 
@@ -70,6 +95,15 @@ class Imputer:
         return self
 
     def transform(self, X):
+        """
+        Impute missing values in X using the statistics computed in fit().
+        Parameters:
+        - X: 2D array-like, the input data to transform
+        Returns:
+        - X_out: 2D numpy array with imputed values
+         Raises:
+         - ValueError: If the imputer has not been fitted or if X is empty or not 2D.
+        """
         if self.statistics_ is None:
             raise ValueError("Imputer must be fitted before calling transform().")
 
@@ -86,13 +120,26 @@ class Imputer:
         return X_out
 
     def fit_transform(self, X):
+        """
+        Fit to data, then transform it.
+        Parameters:
+        - X: 2D array-like, the input data to fit and transform
+        Returns:
+        - X_out: 2D numpy array with imputed values
+         Raises:
+         - ValueError: If X is empty or not 2D.
+        """
         return self.fit(X).transform(X)
 
 
 class StandardScaler:
     """
-    Standardize numeric features (zero mean, unit variance).
-    Ignores non-numeric columns.
+    Standardize numeric features by removing the mean and scaling to unit variance.
+    Non-numeric columns are left unchanged.
+    Missing values (empty strings, None, np.nan) are ignored when computing mean and std.
+    Example usage:
+    scaler = StandardScaler()
+    X_scaled = scaler.fit_transform(X)
     """
 
     def __init__(self):
@@ -101,6 +148,16 @@ class StandardScaler:
         self.numeric_mask_ = None
 
     def _is_numeric(self, col):
+        """
+        Heuristic to determine if a column is numeric.
+        Considers a column numeric if at least 50% of its valid (non-missing and non-empty) entries can be converted to float.
+        Parameters:
+        - col: array-like, the column to check
+        Returns:
+        - bool: True if column is considered numeric, False otherwise
+        Raises:
+        - ValueError: If the column is empty or contains only missing values.
+        """
         valid_count = 0
         numeric_count = 0
 
@@ -122,6 +179,16 @@ class StandardScaler:
         return numeric_count >= valid_count / 2 if valid_count > 0 else False
 
     def fit(self, X, y=None):
+        """
+        Compute mean and std for numeric columns.
+        Parameters:
+        - X: 2D array-like, the input data to fit on
+        - y: Ignored, present for API consistency by convention.
+        Returns:
+        - self: fitted StandardScaler instance
+         Raises:
+         - ValueError: If X is empty or not 2D.
+        """
         X = np.array(X, dtype=object)
         n_features = X.shape[1]
 
@@ -156,8 +223,20 @@ class StandardScaler:
         return self
 
     def transform(self, X):
+        """
+        Standardize numeric columns in X using the mean and std computed in fit().
+        Non-numeric columns are left unchanged.
+        Parameters:
+        - X: 2D array-like, the input data to transform
+        Returns:
+        - X_out: 2D numpy array with standardized numeric columns
+         Raises:
+         - ValueError: If the scaler has not been fitted or if X is empty or not 2D.
+        """
         if self.mean_ is None or self.std_ is None or self.numeric_mask_ is None:
-            raise ValueError("StandardScaler must be fitted before calling transform().")
+            raise ValueError(
+                "StandardScaler must be fitted before calling transform()."
+            )
 
         X = np.array(X, dtype=object)
         X_out = X.copy()
@@ -179,7 +258,12 @@ class StandardScaler:
 
 class OneHotEncoder:
     """
-    One-hot encode categorical features.
+    Encode categorical features as a one-hot numeric array.
+    Non-categorical columns are left unchanged.
+    Missing values (empty strings, None, np.nan) are treated as a separate category.
+    Example usage:
+    encoder = OneHotEncoder()
+    X_encoded = encoder.fit_transform(X)
     """
 
     def __init__(self):
@@ -187,6 +271,16 @@ class OneHotEncoder:
         self.categorical_mask_ = None
 
     def _is_numeric(self, col):
+        """
+        Heuristic to determine if a column is numeric.
+        Considers a column numeric if at least 50% of its valid (non-missing and non-empty) entries can be converted to float.
+        Parameters:
+        - col: array-like, the column to check
+        Returns:
+        - bool: True if column is considered numeric, False otherwise
+        Raises:
+        - ValueError: If the column is empty or contains only missing values.
+        """
         valid_count = 0
         numeric_count = 0
 
@@ -208,6 +302,15 @@ class OneHotEncoder:
         return numeric_count >= valid_count / 2 if valid_count > 0 else False
 
     def fit(self, X):
+        """
+        Compute categories for each categorical column.
+        Parameters:
+        - X: 2D array-like, the input data to fit on
+        Returns:
+        - self: fitted OneHotEncoder instance
+        Raises:
+        - ValueError: If X is empty or not 2D.
+        """
         X = np.array(X, dtype=object)
         n_features = X.shape[1]
 
@@ -231,6 +334,16 @@ class OneHotEncoder:
         return self
 
     def transform(self, X):
+        """
+        Encode categorical features as a one-hot numeric array.
+        Non-categorical columns are left unchanged.
+        Parameters:
+        - X: 2D array-like, the input data to transform
+        Returns:
+        - X_out: 2D numpy array with one-hot encoded categorical columns
+         Raises:
+         - ValueError: If the encoder has not been fitted or if X is empty or not 2D.
+        """
         if self.categories_ is None or self.categorical_mask_ is None:
             raise ValueError("OneHotEncoder must be fitted before calling transform().")
 
@@ -263,4 +376,13 @@ class OneHotEncoder:
         return np.hstack(output_cols)
 
     def fit_transform(self, X):
+        """
+        Fit to data, then transform it.
+        Parameters:
+        - X: 2D array-like, the input data to fit and transform
+        Returns:
+        - X_out: 2D numpy array with one-hot encoded categorical columns
+         Raises:
+         - ValueError: If X is empty or not 2D.
+        """
         return self.fit(X).transform(X)
