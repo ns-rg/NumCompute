@@ -50,14 +50,18 @@ Reproducible timing utilities
 Performance analysis output
 
  **Installation**
+```
 git clone https://github.com/ns-rg/NumCompute.git
 cd NumCompute
+```
 No external dependencies required 
 
 **Quick Start**
 Run the demo notebook:
+```
 cd demo
 jupyter notebook quickstart.ipynb
+```
 
 **Example Usage**
 1. Pipeline Example
