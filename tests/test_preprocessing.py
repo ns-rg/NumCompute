@@ -22,7 +22,7 @@ def test_imputer():
     assert not np.isnan(float(X_out[1][1]))
     assert not np.isnan(float(X_out[2][2]))
 
-    print("✅ test_imputer passed")
+    print("test_imputer passed")
 
 
 def test_standard_scaler():
@@ -45,7 +45,7 @@ def test_standard_scaler():
     # categorical unchanged
     assert X_out[0][0] == "A"
 
-    print("✅ test_standard_scaler passed")
+    print("test_standard_scaler passed")
 
 
 def test_one_hot_encoder():
@@ -67,7 +67,7 @@ def test_one_hot_encoder():
     # Check encoding
     assert (X_out[0][:2] == [1, 0]).all() or (X_out[0][:2] == [0, 1]).all()
 
-    print("✅ test_one_hot_encoder passed")
+    print("test_one_hot_encoder passed")
 
 
 if __name__ == "__main__":

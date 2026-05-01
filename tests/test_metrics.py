@@ -1,5 +1,12 @@
 import numpy as np
-from metrics import accuracy, confusion_matrix, precision, recall, f1_score, mse
+from numcompute.metrics import (
+    accuracy,
+    confusion_matrix,
+    precision,
+    recall,
+    f1_score,
+    mse,
+)
 
 
 def test_accuracy():
@@ -8,6 +15,7 @@ def test_accuracy():
 
     result = accuracy(y_true, y_pred)
     assert result == 0.75
+    print("test_accuracy passed")
 
 
 def test_confusion_matrix():
@@ -15,12 +23,10 @@ def test_confusion_matrix():
     y_pred = [0, 1, 1, 1]
 
     result = confusion_matrix(y_true, y_pred)
-    expected = np.array([
-        [1, 1],
-        [0, 2]
-    ])
+    expected = np.array([[1, 1], [0, 2]])
 
     assert np.array_equal(result, expected)
+    print("test_confusion_matrix passed")
 
 
 def test_precision():
@@ -28,9 +34,10 @@ def test_precision():
     y_pred = [0, 1, 1, 1]
 
     result = precision(y_true, y_pred)
-    expected = (1.0 + 2/3) / 2
+    expected = (1.0 + 2 / 3) / 2
 
     assert np.isclose(result, expected)
+    print("test_precision passed")
 
 
 def test_recall():
@@ -38,9 +45,10 @@ def test_recall():
     y_pred = [0, 1, 1, 1]
 
     result = recall(y_true, y_pred)
-    expected = (1/2 + 1.0) / 2
+    expected = (1 / 2 + 1.0) / 2
 
     assert np.isclose(result, expected)
+    print("test_recall passed")
 
 
 def test_f1_score():
@@ -54,6 +62,7 @@ def test_f1_score():
     expected = 2 * (p * r) / (p + r + 1e-8)
 
     assert np.isclose(result, expected)
+    print("test_f1_score passed")
 
 
 def test_mse():
@@ -63,6 +72,7 @@ def test_mse():
     result = mse(y_true, y_pred)
 
     assert result == 2.0
+    print("test_mse passed")
 
 
 def test_invalid_lengths():
@@ -71,6 +81,7 @@ def test_invalid_lengths():
         assert False
     except ValueError:
         assert True
+    print("test_invalid_lengths passed")
 
 
 def test_empty_input():
@@ -79,6 +90,7 @@ def test_empty_input():
         assert False
     except ValueError:
         assert True
+    print("test_empty_input passed")
 
 
 if __name__ == "__main__":
@@ -90,5 +102,3 @@ if __name__ == "__main__":
     test_mse()
     test_invalid_lengths()
     test_empty_input()
-
-    print("All tests passed successfully!")
